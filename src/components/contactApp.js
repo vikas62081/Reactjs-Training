@@ -8,9 +8,14 @@ import Divider from '@material-ui/core/Divider';
 import { Grid, IconButton } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Actions from './action';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 export default function Carddetail({ contactList,handleDelete,handleView }) {
-
+    const options = [
+        {title:"View",icon:<VisibilityIcon/>,click:(c)=>handleView(c)},
+        {title:"Delete",icon:<DeleteIcon/>,click:(c)=>handleDelete(c.name)},
+      ];
     return (
         <div>
             {contactList.map((userinfo,index) => (
@@ -20,10 +25,10 @@ export default function Carddetail({ contactList,handleDelete,handleView }) {
                             <ListItemAvatar> 
                                 <Avatar/>
                             </ListItemAvatar>
-                            <ListItemText primary={userinfo.name} secondary={userinfo.email} />
+                            <ListItemText primary={userinfo.name} secondary={`Phone: ${userinfo.phone}`} />
                             <Grid align="right" className="action" >
                                 {/* <IconButton><MoreVertIcon/></IconButton> */}
-                                <Actions contact={userinfo} handleDelete={handleDelete} handleView={handleView}/>
+                                <Actions contact={userinfo} options={options}/>
                                 {/* <button onClick={()=>handleView(userinfo)}>View</button>
                                 <button onClick={()=>handleDelete(userinfo.name)}>Delete User</button> */}
                             </Grid>

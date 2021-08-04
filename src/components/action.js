@@ -3,19 +3,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-const options = [
-  {title:"View",icon:<VisibilityIcon/>},
-  {title:"Delete",icon:<DeleteIcon/>}
-];
+
+
 
 const ITEM_HEIGHT = 48;
 
-export default function Actions({contact,handleDelete,handleView}) {
+export default function Actions({contact,options=[]}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+ 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,7 +19,9 @@ export default function Actions({contact,handleDelete,handleView}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+if(options.length===0){
+  return "Options props missing"
+}
   return (
     <div>
       <IconButton
@@ -49,13 +47,8 @@ export default function Actions({contact,handleDelete,handleView}) {
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option} title={option.title} selected={option === 'Pyxis'} onClick={()=>{
-              if(option.title==="View"){
-                handleView(contact)
-              }
-              else if(option.title==="Delete"){
-                  handleDelete(contact.name)
-              }
+          <MenuItem key={option} title={option.title} onClick={()=>{
+            option.click(contact)
               handleClose()
           }}>
             {option.icon}
